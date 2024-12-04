@@ -1,17 +1,47 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\BaseController;
+use App\Http\Controllers\PenyewaController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\PemasukanController;
+use App\Http\Controllers\PengeluaranController;
 
-Route::get('/', function () {
-    return view('welcome');
-});
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// Route::get('/dashboard', function () {
+//     return view('dashboard');
+// })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
+    Route::get('/', [BaseController::class, 'index'])->name('dashboard');
+
+    Route::controller(PenyewaController::class)->prefix('penyewa')->name('penyewa')->group(function () {
+        Route::get('/', 'index');
+        Route::get('/detail', 'detail')->name('.detail');
+        Route::get('/create', 'create')->name('.create');
+        Route::post('/store', 'store')->name('.store');
+        Route::patch('/update/{id}', 'update')->name('.update');
+        Route::delete('/destroy/{id}', 'destroy')->name('.destroy');
+    });
+
+    Route::controller(PemasukanController::class)->prefix('pemasukan')->name('pemasukan')->group(function () {
+        Route::get('/', 'index');
+        Route::get('/pemasukan/detail', 'detail')->name('.detail');
+        Route::get('/pemasukan/create', 'create')->name('.create');
+        Route::post('/pemasukan/store', 'store')->name('.store');
+        Route::patch('/pemasukan/update', 'update')->name('.update');
+        Route::delete('/pemasukan/destroy', 'destroy')->name('.destroy');
+    });
+
+    Route::controller(PengeluaranController::class)->prefix('pengeluaran')->name('pengeluaran')->group(function () {
+        Route::get('/', 'index');
+        Route::get('/pengeluaran/detail', 'detail')->name('.detail');
+        Route::get('/pengeluaran/create', 'create')->name('.create');
+        Route::post('/pengeluaran/store', 'store')->name('.store');
+        Route::patch('/pengeluaran/update', 'update')->name('.update');
+        Route::delete('/pengeluaran/destroy', 'destroy')->name('.destroy');
+    });
+
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
