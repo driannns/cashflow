@@ -55,11 +55,12 @@ class PenyewaController extends Controller
 
             $kelipatan = 1;
             $totalSewa = $request->lamaSewa * $request->hargaSewa;
+
             if($request->jenisSewaKamar == "Harian"){
                 $kelipatan = 1;
             } else if($request->jenisSewaKamar == "Mingguan"){
                 $kelipatan = 7;
-            } else if($request->jenisSewaKamar == "Mingguan"){
+            } else if($request->jenisSewaKamar == "Bulanan"){
                 $kelipatan = 30;
             } 
 
