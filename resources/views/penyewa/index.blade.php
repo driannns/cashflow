@@ -64,14 +64,14 @@
                         @endif
                     </td>
                     <td class="px-6 py-4 flex items-center">
-                        <button data-modal-target="edit-modal" data-modal-toggle="edit-modal" class="w-fit"><img src="{{ asset('assets/edit.png') }}" alt="" class="w-2/3"></button>
-                        <button data-modal-target="delete-modal" data-modal-toggle="delete-modal" class="w-fit"><img src="{{ asset('assets/delete.png') }}" alt="" class="w-2/3"></button>
-                        <button data-modal-target="show-modal" data-modal-toggle="show-modal" class="w-fit"><img src="{{ asset('assets/show.png') }}" alt="" class="w-2/3"></button>
+                        <button data-modal-target="edit-modal{{$data->id}}" data-modal-toggle="edit-modal{{$data->id}}" class="w-fit"><img src="{{ asset('assets/edit.png') }}" alt="" class="w-2/3"></button>
+                        <button data-modal-target="delete-modal{{$data->id}}" data-modal-toggle="delete-modal{{$data->id}}" class="w-fit"><img src="{{ asset('assets/delete.png') }}" alt="" class="w-2/3"></button>
+                        <button data-modal-target="show-modal{{$data->id}}" data-modal-toggle="show-modal{{$data->id}}" class="w-fit"><img src="{{ asset('assets/show.png') }}" alt="" class="w-2/3"></button>
                     </td>
                 </tr>
 
                 <!-- Edit modal -->
-                <div id="edit-modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+                <div id="edit-modal{{$data->id}}" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
                     <div class="relative p-4 w-full max-w-2xl max-h-full">
                         <!-- Modal content -->
                         <div class="relative bg-white rounded-lg shadow">
@@ -80,7 +80,7 @@
                                 <h3 class="text-xl font-semibold text-gray-900 text-center">
                                     Ubah Data Penyewa
                                 </h3>
-                                <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center" data-modal-hide="edit-modal">
+                                <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center" data-modal-hide="edit-modal{{$data->id}}">
                                     <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
                                     </svg>
@@ -139,7 +139,7 @@
                                     </div>
                                     <div class="mb-6 flex items-center">
                                         <label for="keterangan" class="block mb-2 font-medium text-gray-900 w-4/12 text-sm">Keterangan</label>
-                                       <textarea id="keterangan" name="keterangan" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500" placeholder="Keterangan...">{{ $data->keterangan }}</textarea>
+                                       <textarea id="keterangan" name="keterangan" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500" placeholder="Keterangan..." required>{{ $data->keterangan }}</textarea>
                                     </div>
                                     <div class="mb-6 flex items-center">
                                         <label for="hargaSewa" class="block mb-2 font-medium text-gray-900 w-4/12 text-sm">Status</label>                       
@@ -164,7 +164,7 @@
                 </div>
 
                 <!-- Show modal -->
-                <div id="show-modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+                <div id="show-modal{{$data->id}}" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
                     <div class="relative p-4 w-full max-w-2xl max-h-full">
                         <!-- Modal content -->
                         <div class="relative bg-white rounded-lg shadow">
@@ -173,7 +173,7 @@
                                 <h3 class="text-xl font-semibold text-gray-900 text-center">
                                     Detail Penyewa
                                 </h3>
-                                <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center" data-modal-hide="show-modal">
+                                <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center" data-modal-hide="show-modal{{$data->id}}">
                                     <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
                                     </svg>
@@ -224,7 +224,7 @@
                                         </div>
                                     </div>
                                     <div class="mb-6 flex items-center">
-                                        <label for="tanggalKeluar" class="block font-medium text-gray-900 w-1/2 text-lg">Jenis Kelamin</label>
+                                        <label for="tanggalKeluar" class="block font-medium text-gray-900 w-1/2 text-lg">Tanggal Keluar</label>
                                        <div id="tanggalKeluar" class="w-1/2 text-gray-900 text-lg block p-2.5">
                                             {{ $data->tanggalKeluar }}
                                         </div>
@@ -260,7 +260,7 @@
                                         </div>
                                     </div>
                                     <div class="flex justify-center">
-                                        <button data-modal-hide="show-modal" class="bg-[#CED5FC] rounded-md px-5 py-3" type="submit">Tutup</button>
+                                        <button data-modal-hide="show-modal{{$data->id}}" class="bg-[#CED5FC] rounded-md px-5 py-3" type="submit">Tutup</button>
                                     </div>
                                 </div>
                             </div>
@@ -269,10 +269,10 @@
                 </div>
 
                 <!-- Delete Modal -->
-                <div id="delete-modal" tabindex="-1" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+                <div id="delete-modal{{$data->id}}" tabindex="-1" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
                     <div class="relative p-4 w-full max-w-md max-h-full">
                         <div class="relative bg-white rounded-lg shadow">
-                            <button type="button" class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center" data-modal-hide="delete-modal">
+                            <button type="button" class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center" data-modal-hide="delete-modal{{$data->id}}">
                                 <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
                                 </svg>
@@ -286,8 +286,8 @@
                                 <form action="{{ route('penyewa.destroy', $data->id) }}" method="post">
                                     @csrf
                                     @method('delete')
-                                    <button data-modal-hide="delete-modal" type="button" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100">Batal</button>
-                                    <button data-modal-hide="delete-modal" type="submit" class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">
+                                    <button data-modal-hide="delete-modal{{$data->id}}" type="button" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100">Batal</button>
+                                    <button data-modal-hide="delete-modal{{$data->id}}" type="submit" class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">
                                         Hapus
                                     </button>
                                 </form>

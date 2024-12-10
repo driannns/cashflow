@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Pemasukan;
 use Illuminate\Http\Request;
 
 class PemasukanController extends Controller
@@ -11,7 +12,8 @@ class PemasukanController extends Controller
      */
     public function index()
     {
-        //
+        $pemasukan = Pemasukan::all();
+        return view ('pemasukan.index', compact('pemasukan'));
     }
 
     /**
@@ -19,7 +21,7 @@ class PemasukanController extends Controller
      */
     public function create()
     {
-        //
+        return view ('pemasukan.create');
     }
 
     /**
@@ -27,7 +29,29 @@ class PemasukanController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try{
+            $request->validate([
+                "kamar" => "required",
+                "penghuni" => "required",
+                "tanggalPembayaran" => "required",
+                "nominal" => "required",
+                "status" => "required",
+                "keterangan" => "required"
+            ]);
+
+            Pemasukan::create([
+                "kamar" => $request->kamar,
+                "penghuni" => $request->penghuni,
+                "tanggalPembayaran" => $request->tanggalPembayaran,
+                "nominal" => $request->nominal,
+                "status" => $request->status,
+                "keterangan" => $request->keterangan
+            ]);
+
+            return redirect()->route('pemasukan')->with('message', 'Berhasil menginput pemasukan baru');
+        }catch(\Exception $e){
+            return redirect()->back()->with('error', $e->getMessage());
+        }
     }
 
     /**
@@ -51,7 +75,32 @@ class PemasukanController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+         try{
+            $pemasukan = Pemasukan::find($id);
+
+            $request->validate([
+                "kamar" => "required",
+                "penghuni" => "required",
+                "tanggalPembayaran" => "required",
+                "nominal" => "required",
+                "status" => "required",
+                "keterangan" => "required"
+            ]);
+
+            $pemasukan->update([
+                "kamar" => $request->kamar,
+                "penghuni" => $request->penghuni,
+                "tanggalPembayaran" => $request->tanggalPembayaran,
+                "nominal" => $request->nominal,
+                "status" => $request->status,
+                "keterangan" => $request->keterangan
+            ]);
+
+            return redirect()->route('pemasukan')->with('message', 'Berhasil mengedit pemasukan baru');
+        }catch(\Exception $e){
+            dd($e);
+            return redirect()->back()->with('error', $e->getMessage());
+        }
     }
 
     /**
@@ -59,6 +108,13 @@ class PemasukanController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+         try{
+            $pemasukan = Pemasukan::find($id);
+            $pemasukan->delete();
+
+            return redirect()->back()->with('message', 'Berhasil menghapus pemasukan');
+        } catch(\Exception $e){
+            return redirect()->back()->with('error', $e->getMessage());
+        }
     }
 }

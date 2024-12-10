@@ -17,8 +17,8 @@ return new class extends Migration
             $table->string('penghuni');
             $table->date('tanggalPembayaran');
             $table->integer('nominal');
-            $table->enum('status', ['Belum Lunas', 'Lunas']);
-            $table->string('keterangan');
+            $table->enum('status', ['Belum Konfirmasi', 'Sudah Konfirmasi']);
+            $table->string('keterangan')->nullable();
             $table->timestamps();
         });
     }

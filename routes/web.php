@@ -26,20 +26,20 @@ Route::middleware('auth')->group(function () {
 
     Route::controller(PemasukanController::class)->prefix('pemasukan')->name('pemasukan')->group(function () {
         Route::get('/', 'index');
-        Route::get('/pemasukan/detail', 'detail')->name('.detail');
-        Route::get('/pemasukan/create', 'create')->name('.create');
-        Route::post('/pemasukan/store', 'store')->name('.store');
-        Route::patch('/pemasukan/update', 'update')->name('.update');
-        Route::delete('/pemasukan/destroy', 'destroy')->name('.destroy');
+        Route::get('/detail', 'detail')->name('.detail');
+        Route::get('/create', 'create')->name('.create');
+        Route::post('/store', 'store')->name('.store');
+        Route::patch('/update/{id}', 'update')->name('.update');
+        Route::delete('/destroy/{id}', 'destroy')->name('.destroy');
     });
 
     Route::controller(PengeluaranController::class)->prefix('pengeluaran')->name('pengeluaran')->group(function () {
         Route::get('/', 'index');
-        Route::get('/pengeluaran/detail', 'detail')->name('.detail');
-        Route::get('/pengeluaran/create', 'create')->name('.create');
-        Route::post('/pengeluaran/store', 'store')->name('.store');
-        Route::patch('/pengeluaran/update', 'update')->name('.update');
-        Route::delete('/pengeluaran/destroy', 'destroy')->name('.destroy');
+        Route::get('/detail', 'detail')->name('.detail');
+        Route::get('/create', 'create')->name('.create');
+        Route::post('/store', 'store')->name('.store');
+        Route::patch('/update/{id}', 'update')->name('.update');
+        Route::delete('/destroy/{id}', 'destroy')->name('.destroy');
     });
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
