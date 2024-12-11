@@ -8,10 +8,6 @@ use App\Http\Controllers\PemasukanController;
 use App\Http\Controllers\PengeluaranController;
 
 
-// Route::get('/dashboard', function () {
-//     return view('dashboard');
-// })->middleware(['auth', 'verified'])->name('dashboard');
-
 Route::middleware('auth')->group(function () {
     Route::get('/', [BaseController::class, 'index'])->name('dashboard');
 
@@ -41,6 +37,8 @@ Route::middleware('auth')->group(function () {
         Route::patch('/update/{id}', 'update')->name('.update');
         Route::delete('/destroy/{id}', 'destroy')->name('.destroy');
     });
+    
+    Route::get('/laporan', [BaseController::class, 'laporan'])->name('laporan');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
