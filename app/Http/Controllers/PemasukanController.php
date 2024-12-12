@@ -10,9 +10,16 @@ class PemasukanController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         $pemasukan = Pemasukan::all();
+        $tanggalAwal = $request->tanggalAwal;
+        $tanggalAkhir = $request->tanggalAkhir;
+        
+        if($tanggalAwal && $tanggalAkhir){
+            $pemasukan = Pemasukan::whereBetween('tanggalPembayaran', [$tanggalAwal, $tanggalAkhir])->get();
+        }
+
         return view ('pemasukan.index', compact('pemasukan'));
     }
 
@@ -30,6 +37,7 @@ class PemasukanController extends Controller
     public function store(Request $request)
     {
         try{
+            if($request->status){
             $request->validate([
                 "kamar" => "required",
                 "penghuni" => "required",
@@ -38,18 +46,34 @@ class PemasukanController extends Controller
                 "status" => "required",
                 "keterangan" => "required"
             ]);
-
-            Pemasukan::create([
-                "kamar" => $request->kamar,
-                "penghuni" => $request->penghuni,
-                "tanggalPembayaran" => $request->tanggalPembayaran,
-                "nominal" => $request->nominal,
-                "status" => $request->status,
-                "keterangan" => $request->keterangan
+                Pemasukan::create([
+                    "kamar" => $request->kamar,
+                    "penghuni" => $request->penghuni,
+                    "tanggalPembayaran" => $request->tanggalPembayaran,
+                    "nominal" => $request->nominal,
+                    "status" => $request->status,
+                    "keterangan" => $request->keterangan
+                ]);
+            }else{
+                $request->validate([
+                "kamar" => "required",
+                "penghuni" => "required",
+                "tanggalPembayaran" => "required",
+                "nominal" => "required",
+                "keterangan" => "required"
             ]);
+                Pemasukan::create([
+                    "kamar" => $request->kamar,
+                    "penghuni" => $request->penghuni,
+                    "tanggalPembayaran" => $request->tanggalPembayaran,
+                    "nominal" => $request->nominal,
+                    "keterangan" => $request->keterangan
+                ]);
+            }
 
             return redirect()->route('pemasukan')->with('message', 'Berhasil menginput pemasukan baru');
         }catch(\Exception $e){
+            dd($e);
             return redirect()->back()->with('error', $e->getMessage());
         }
     }

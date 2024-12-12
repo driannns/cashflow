@@ -22,6 +22,7 @@ Route::middleware('auth')->group(function () {
 
     Route::controller(PemasukanController::class)->prefix('pemasukan')->name('pemasukan')->group(function () {
         Route::get('/', 'index');
+        Route::post('/', 'index')->name('.filter');
         Route::get('/detail', 'detail')->name('.detail');
         Route::get('/create', 'create')->name('.create');
         Route::post('/store', 'store')->name('.store');
@@ -31,6 +32,7 @@ Route::middleware('auth')->group(function () {
 
     Route::controller(PengeluaranController::class)->prefix('pengeluaran')->name('pengeluaran')->group(function () {
         Route::get('/', 'index');
+        Route::post('/', 'index')->name('.filter');
         Route::get('/detail', 'detail')->name('.detail');
         Route::get('/create', 'create')->name('.create');
         Route::post('/store', 'store')->name('.store');
@@ -39,6 +41,8 @@ Route::middleware('auth')->group(function () {
     });
     
     Route::get('/laporan', [BaseController::class, 'laporan'])->name('laporan');
+    Route::post('/laporant/printed', [BaseController::class, 'print'])->name('print');
+    Route::get('/laporant/printed/{month}', [BaseController::class, 'print'])->name('printFiltered');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

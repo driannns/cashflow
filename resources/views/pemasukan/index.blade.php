@@ -2,19 +2,23 @@
     <div class="flex flex-col gap-y-4">    
         <h1 class="text-center font-bold text-2xl">Daftar Pemasukan</h1>
         <div class="flex items-end justify-between">
-            <div class="w-4/12 bg-white rounded-md p-3">
+            <form action="{{ route('pemasukan.filter') }}" method="post" class="w-4/12 bg-white rounded-md p-3">
+                @csrf
                 <h1 class="text-center text-lg font-medium">Lihat Pemasukan</h1>
                 <div class="mt-4">
                     <div class="mb-6 flex items-center">
-                        <label for="tanggalMasuk" class="block mb-2 font-medium text-gray-900 w-2/3 text-sm">Tanggal Awal</label>
-                        <input type="date" id="tanggalMasuk" name="tanggalMasuk" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>
+                        <label for="tanggalAwal" class="block mb-2 font-medium text-gray-900 w-2/3 text-sm">Tanggal Awal</label>
+                        <input type="date" id="tanggalAwal" name="tanggalAwal" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>
                     </div>
                     <div class="mb-6 flex items-center">
-                        <label for="tanggalMasuk" class="block mb-2 font-medium text-gray-900 w-2/3 text-sm">Tanggal Akhir</label>
-                        <input type="date" id="tanggalMasuk" name="tanggalMasuk" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>
+                        <label for="tanggalAkhir" class="block mb-2 font-medium text-gray-900 w-2/3 text-sm">Tanggal Akhir</label>
+                        <input type="date" id="tanggalAkhir" name="tanggalAkhir" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>
                     </div>
                 </div>
-            </div>
+                <div class="flex w-full justify-center">
+                    <button type="submit" class="rounded-md py-1 px-4 bg-[#CED5FC]">Filter</button>
+                </div>
+            </form>
             <button data-modal-target="create-modal" data-modal-toggle="create-modal" class="bg-[#CED5FC] rounded-md px-5 py-3 font-bold" type="submit">+ Tambah Pemasukan</button>
         </div>
         <div class="relative overflow-x-auto">
@@ -118,6 +122,7 @@
                                         <label for="nominal" class="block mb-2 font-medium text-gray-900 w-4/12 text-sm">Nominal</label>
                                         <input type="number" value="{{ $data->nominal }}" id="nominal" name="nominal"class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>
                                     </div>
+                                    @if(Auth::user()->is_pemilik_kost == True)
                                     <div class="mb-6 flex items-center">
                                         <label for="status" class="block mb-2 font-medium text-gray-900 w-4/12 text-sm">Status</label>
                                         <select id="status" name="status" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>
@@ -126,6 +131,7 @@
                                             <option value="Sudah Konfirmasi" {{ $data->status == "Sudah Konfirmasi" ? 'selected' : '' }}>Sudah Konfirmasi</option>
                                         </select>
                                     </div>
+                                    @endif
                                     <div class="mb-6 flex items-center">
                                         <label for="keterangan" class="block mb-2 font-medium text-gray-900 w-4/12 text-sm">Keterangan</label>
                                         <textarea id="keterangan" name="keterangan" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500" placeholder="Keterangan..." required>{{ $data->keterangan }}</textarea>
@@ -272,6 +278,7 @@
                             <label for="nominal" class="block mb-2 font-medium text-gray-900 w-4/12 text-sm">Nominal</label>
                             <input type="number" id="nominal" name="nominal"class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>
                         </div>
+                        @if(Auth::user()->is_pemilik_kost == True)
                         <div class="mb-6 flex items-center">
                             <label for="status" class="block mb-2 font-medium text-gray-900 w-4/12 text-sm">Status</label>
                             <select id="status" name="status" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>
@@ -280,6 +287,7 @@
                                 <option value="Sudah Konfirmasi">Sudah Konfirmasi</option>
                             </select>
                         </div>
+                        @endif
                         <div class="mb-6 flex items-center">
                             <label for="keterangan" class="block mb-2 font-medium text-gray-900 w-4/12 text-sm">Keterangan</label>
                             <textarea id="keterangan" name="keterangan" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500" placeholder="Keterangan..." required></textarea>

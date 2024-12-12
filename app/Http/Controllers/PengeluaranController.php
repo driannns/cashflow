@@ -11,9 +11,15 @@ class PengeluaranController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         $pengeluaran = Pengeluaran::all();
+        $tanggalAwal = $request->tanggalAwal;
+        $tanggalAkhir = $request->tanggalAkhir;
+
+         if($tanggalAwal && $tanggalAkhir){
+            $pengeluaran = Pengeluaran::whereBetween('tanggalPengeluaran', [$tanggalAwal, $tanggalAkhir])->get();
+        }
 
         return view ('pengeluaran.index', compact('pengeluaran'));
     }

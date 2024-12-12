@@ -141,6 +141,7 @@
                                         <label for="keterangan" class="block mb-2 font-medium text-gray-900 w-4/12 text-sm">Keterangan</label>
                                        <textarea id="keterangan" name="keterangan" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500" placeholder="Keterangan..." required>{{ $data->keterangan }}</textarea>
                                     </div>
+                                    @if(Auth::user()->is_pemilik_kost == True)
                                     <div class="mb-6 flex items-center">
                                         <label for="hargaSewa" class="block mb-2 font-medium text-gray-900 w-4/12 text-sm">Status</label>                       
                                         <div class="w-full">
@@ -154,6 +155,7 @@
                                             </div>
                                         </div>
                                     </div>
+                                    @endif
                                     <div class="flex justify-center">
                                         <button class="bg-[#CED5FC] rounded-md px-5 py-3" type="submit">Simpan</button>
                                     </div>

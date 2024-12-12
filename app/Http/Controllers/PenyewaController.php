@@ -123,8 +123,7 @@ class PenyewaController extends Controller
                 "tanggalMasuk" => "required",
                 "lamaSewa" => "required",
                 "hargaSewa" => "required",
-                "keterangan" => "required",
-                "status" => "required"
+                "keterangan" => "required"
             ]);
 
             $kelipatan = 1;
@@ -140,6 +139,10 @@ class PenyewaController extends Controller
             $tanggalMasuk = Carbon::parse($request->tanggalMasuk);
             $tanggalKeluar = $tanggalMasuk->addDays($kelipatan * $request->lamaSewa);
 
+            if($request->status){
+                $penyewa->update(["status" => $request->status]);
+            }
+
             $penyewa->update([
                 'jenisSewaKamar' => $request->jenisSewaKamar,
                 "noKamar" => $request->noKamar,
@@ -153,7 +156,6 @@ class PenyewaController extends Controller
                 "hargaSewa" => $request->hargaSewa,
                 "totalSewa" => $totalSewa,
                 "keterangan" => $request->keterangan,
-                "status" => $request->status,
             ]);
 
             return redirect()->route('penyewa')->with('message', 'Berhasil mengedit penyewa');

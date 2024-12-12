@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('penghuni');
             $table->date('tanggalPembayaran');
             $table->integer('nominal');
-            $table->enum('status', ['Belum Konfirmasi', 'Sudah Konfirmasi']);
+            $table->enum('status', ['Belum Konfirmasi', 'Sudah Konfirmasi'])->default('Belum Konfirmasi');
             $table->string('keterangan')->nullable();
             $table->timestamps();
         });
