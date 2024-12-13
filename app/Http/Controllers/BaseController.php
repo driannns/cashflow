@@ -51,7 +51,31 @@ class BaseController extends Controller
         $netBalanceLastYear = 0;
         $netBalance = $totalPemasukan - $totalPengeluaran;
 
-        return view ('dashboard', compact('currentYear', 'currentMonthName', 'penyewa', 'totalPemasukan', 'totalPengeluaran', 'pemasukanValues', 'pengeluaranValues', 'netBalance', 'netBalance', 'months' , 'pemasukanLastYear', 'pemasukanThisYear', 'netBalanceLastYear'));
+        $pemasukanValuesVAT = 
+        [
+            'Januari' => ['pemasukan' => 0, 'pajak' => 0 ], 
+            'Februari' => ['pemasukan' => 0, 'pajak' => 0 ], 
+            'Maret' => ['pemasukan' => 0, 'pajak' => 0 ], 
+            'April' => ['pemasukan' => 0, 'pajak' => 0 ], 
+            'Mei' => ['pemasukan' => 0, 'pajak' => 0 ], 
+            'Juni' => ['pemasukan' => 0, 'pajak' => 0 ], 
+            'Juli' => ['pemasukan' => 0, 'pajak' => 0 ], 
+            'Agustus' => ['pemasukan' => 0, 'pajak' => 0 ], 
+            'September' => ['pemasukan' => 0, 'pajak' => 0 ], 
+            'Oktober' => ['pemasukan' => 0, 'pajak' => 0 ], 
+            'November' => ['pemasukan' => 0, 'pajak' => 0 ], 
+            'Desember' => ['pemasukan'  => 0, 'pajak' => 0]
+        ];
+
+        foreach($pemasukanMonths as $month => $data){
+            $vat = ($data * 0.1 );
+            $pemasukanValuesVAT[$month] = [
+                'pemasukan' => $data,
+                'pajak' => $vat,
+            ];
+        }
+
+        return view ('dashboard', compact('pemasukanValuesVAT', 'currentYear', 'currentMonthName', 'penyewa', 'totalPemasukan', 'totalPengeluaran', 'pemasukanValues', 'pengeluaranValues', 'netBalance', 'netBalance', 'months' , 'pemasukanLastYear', 'pemasukanThisYear', 'netBalanceLastYear'));
     }
 
     public function laporan(){

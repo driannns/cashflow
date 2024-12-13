@@ -56,6 +56,24 @@
         </div>
         <div class="rounded-md bg-white p-5">
             <h1 class="text-2xl font-bold">Perkiraan pembayaran pajak</h1>
+            <div class="grid grid-cols-3 gap-10 mt-5">
+              @foreach($pemasukanValuesVAT as $data => $value)
+              <div>
+                <p class="text-lg font-bold">Bulan {{ $data }}</p>
+                <div class="flex items-center justify-between">
+                  <div>
+                    <p>Pemasukan:</p> 
+                    <p>{{ 'Rp. ' . number_format($value['pemasukan'], 2, ',', '.') }}</p>
+                  </div>
+                  <div>
+                    <p>Pajak:</p> 
+                    <p>
+                      {{ 'Rp. ' . number_format($value['pajak'], 2, ',', '.') }}</div>
+                    </p>
+                </div>
+              </div>
+              @endforeach
+            </div>
         </div>
         <div class="rounded-md bg-white p-5">
             <h1 class="text-2xl font-bold">Grafik Keuangan Tahunan 2024</h1>
