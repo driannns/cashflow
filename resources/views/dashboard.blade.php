@@ -16,7 +16,7 @@
                 <div class="flex items-center justify-around px-2 py-5">
                     <div>
                         <p class="text-2xl font-bold">{{ count($penyewa) }}</p>
-                        <p>Total Penyewa Kamar</p>
+                        <p class="font-semibold text-lg">Total Penyewa Kamar</p>
                     </div>
                     <div>
                         >
@@ -31,7 +31,7 @@
                 <div class="flex items-center justify-around px-2 py-5">
                     <div>
                         <p class="text-2xl font-bold">{{ 'Rp. ' . number_format($totalPemasukan, 2, ',', '.') }}</p>
-                        <p>Total Pemasukan</p>
+                        <p class="font-semibold text-lg">{{ $currentMonthName }} {{ $currentYear }}</p>
                     </div>
                     <div>
                         >
@@ -46,7 +46,7 @@
                 <div class="flex items-center justify-around px-2 py-5">
                     <div>
                         <p class="text-2xl font-bold">{{ 'Rp. ' . number_format($totalPengeluaran, 2, ',', '.') }}</p>
-                        <p>Total Pengeluaran</p>
+                        <p class="font-semibold text-lg">{{ $currentMonthName }} {{ $currentYear }}</p>
                     </div>
                     <div>
                         >

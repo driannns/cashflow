@@ -13,8 +13,11 @@ class BaseController extends Controller
     public function index(){
         Carbon::setLocale('id');
         $penyewa = Penyewa::all();
-        $totalPemasukan = Pemasukan::sum('nominal');
-        $totalPengeluaran = Pengeluaran::sum('jumlah');
+        $currentMonth = Carbon::now()->month;
+        $currentYear = Carbon::now()->year;
+        $currentMonthName = Carbon::now()->translatedFormat('F');
+        $totalPemasukan = Pemasukan::whereMonth('tanggalPembayaran', $currentMonth)->sum('nominal');
+        $totalPengeluaran = Pengeluaran::whereMonth('tanggalPengeluaran', $currentMonth)->sum('jumlah');
         $currentYear = Carbon::now()->year;
 
         $months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
@@ -47,23 +50,23 @@ class BaseController extends Controller
         $pemasukanThisYear = (int) Pemasukan::whereYear('tanggalPembayaran', $currentYear)->sum('nominal');
         $netBalanceLastYear = 0;
         $netBalance = $totalPemasukan - $totalPengeluaran;
-        
-        return view ('dashboard', compact('penyewa', 'totalPemasukan', 'totalPengeluaran', 'pemasukanValues', 'pengeluaranValues', 'netBalance', 'netBalance', 'months' , 'pemasukanLastYear', 'pemasukanThisYear', 'netBalanceLastYear'));
+
+        return view ('dashboard', compact('currentYear', 'currentMonthName', 'penyewa', 'totalPemasukan', 'totalPengeluaran', 'pemasukanValues', 'pengeluaranValues', 'netBalance', 'netBalance', 'months' , 'pemasukanLastYear', 'pemasukanThisYear', 'netBalanceLastYear'));
     }
 
     public function laporan(){
         Carbon::setLocale('id');
 
         $currentYear= Carbon::now()->year;
-        $currentMonth= Carbon::now()->month;
+        $lastThreeMonth = Carbon::now()->subMonth(3)->month;
+        $lastTwoMonths = Carbon::now()->subMonth(2)->month;
         $lastMonth = Carbon::now()->subMonth()->month;
-        $nextMonth = Carbon::now()->addMonths()->month;
-        $nextTwoMonths = Carbon::now()->addMonths(2)->month;
+        $currentMonth= Carbon::now()->month;
 
         $currentMonthName = Carbon::now()->translatedFormat('F');
         $lastMonthName = Carbon::now()->subMonth()->translatedFormat('F');
-        $nextMonthName = Carbon::now()->addMonths()->translatedFormat('F');
-        $nextTwoMonthsName = Carbon::now()->addMonths(2)->translatedFormat('F');
+        $lastTwoMonthsName = Carbon::now()->subMonth(2)->translatedFormat('F');
+        $lastThreeMonthsName = Carbon::now()->subMonth(3)->translatedFormat('F');
 
         $pemasukanCurrentMonth = Pemasukan::whereMonth('tanggalPembayaran', $currentMonth)->sum('nominal');
         $pengeluaranCurrentMonth = Pengeluaran::whereMonth('tanggalPengeluaran', $currentMonth)->sum('jumlah');
@@ -71,17 +74,21 @@ class BaseController extends Controller
         $pemasukanLastMonth = Pemasukan::whereMonth('tanggalPembayaran', $lastMonth)->sum('nominal');
         $pengeluaranLastMonth = Pengeluaran::whereMonth('tanggalPengeluaran', $lastMonth)->sum('jumlah');
 
-        $pemasukanNextMonth = Pemasukan::whereMonth('tanggalPembayaran', $nextMonth)->sum('nominal');
-        $pengeluaranNextMonth = Pengeluaran::whereMonth('tanggalPengeluaran', $nextMonth)->sum('jumlah');
+        $pemasukanLastTwoMonths = Pemasukan::whereMonth('tanggalPembayaran', $lastTwoMonths)->sum('nominal');
+        $pengeluaranLastTwoMonths = Pengeluaran::whereMonth('tanggalPengeluaran', $lastTwoMonths)->sum('jumlah');
 
-        $pemasukanNextTwoMonths = Pemasukan::whereMonth('tanggalPembayaran', $nextTwoMonths)->sum('nominal');
-        $pengeluaranNextTwoMonths = Pengeluaran::whereMonth('tanggalPengeluaran', $nextTwoMonths)->sum('jumlah');
+        $pemasukanLastThreeMonth = Pemasukan::whereMonth('tanggalPembayaran', $lastThreeMonth)->sum('nominal');
+        $pengeluaranLastThreeMonth = Pengeluaran::whereMonth('tanggalPengeluaran', $lastThreeMonth)->sum('jumlah');
 
-        return view('laporan.index', compact('currentYear', 'currentMonthName', 'lastMonthName', 'nextMonthName', 'nextTwoMonthsName','pemasukanCurrentMonth', 'pengeluaranCurrentMonth', 'pemasukanLastMonth', 'pengeluaranLastMonth', 'pemasukanNextMonth', 'pengeluaranNextMonth', 'pemasukanNextTwoMonths', 'pengeluaranNextTwoMonths'));
+        $currentYear = date('Y');
+        $years = range($currentYear, $currentYear - 10);
+        
+        return view('laporan.index', compact('years', 'currentYear', 'currentMonthName', 'lastMonthName', 'lastTwoMonthsName', 'lastThreeMonthsName','pemasukanCurrentMonth', 'pengeluaranCurrentMonth', 'pemasukanLastMonth', 'pengeluaranLastMonth', 'pemasukanLastTwoMonths', 'pengeluaranLastTwoMonths', 'pemasukanLastThreeMonth', 'pengeluaranLastThreeMonth'));
     }
 
-    public function print(Request $request, String $month){
+    public function print(Request $request){
         Carbon::setLocale('id');
+        
         $months = [
             'Januari' => [],
             'Februari' => [],
@@ -96,6 +103,81 @@ class BaseController extends Controller
             'November' => [],
             'Desember' => [],
         ];
+
+        if($request->filterTahun){
+            $startDate = Carbon::parse($request->filterTahun . '-01-01');
+            $endDate = Carbon::parse($request->filterTahun . '-12-31');
+        }else{
+            $startDate = Carbon::parse($request->tanggalAwal);
+            $endDate = Carbon::parse($request->tanggalAkhir);
+        }
+        $allDates = [];
+
+        for ($date = $startDate; $date->lte($endDate); $date->addDay()) {
+            $allDates[] = $date->toDateString();
+        }
+
+        foreach ($allDates as $date) {
+            $carbonDate = Carbon::parse($date);
+            $monthName = $carbonDate->translatedFormat('F');
+
+            $pemasukan = Pemasukan::whereDate('tanggalPembayaran', $date)->get();
+            foreach ($pemasukan as $entry) {
+                $entry->type = 'Pemasukan';
+                $months[$monthName][] = $entry;
+            }
+
+            $pengeluaran = Pengeluaran::whereDate('tanggalPengeluaran', $date)->get();
+            foreach ($pengeluaran as $entry) {
+                $entry->type = 'Pengeluaran';
+                $months[$monthName][] = $entry;
+            }
+        }
+
+        $months = array_filter($months, function ($value) {
+            return !empty($value);
+        });
+
+        $tanggalAwal =$request->tanggalAwal;
+        $tanggalAkhir =$request->tanggalAkhir;
+        
+        $monthSums = [];
+        $totalPemasukan = 0;
+        $totalPengeluaran = 0;
+        foreach ($months as $monthName => $entries) {
+
+            $entriesCollection = collect($entries);
+            $sumPemasukan = $entriesCollection->where('type', 'Pemasukan')->sum('nominal');
+            $sumPengeluaran = $entriesCollection->where('type', 'Pengeluaran')->sum('jumlah');
+            $totalPemasukan += $sumPemasukan;
+            $totalPengeluaran += $sumPengeluaran;
+            $monthSums[$monthName] = [
+                'pemasukan' => $sumPemasukan,
+                'pengeluaran' => $sumPengeluaran,
+                'net_balance' => $sumPemasukan - $sumPengeluaran,
+            ];
+        }
+        
+        return view('laporan.print', compact('months', 'tanggalAwal', 'tanggalAkhir', 'monthSums', 'totalPemasukan', 'totalPengeluaran'));
+    }
+    public function printFiltered(Request $request, String $month){
+        Carbon::setLocale('id');
+
+        $months = [
+            'Januari' => [],
+            'Februari' => [],
+            'Maret' => [],
+            'April' => [],
+            'Mei' => [],
+            'Juni' => [],
+            'Juli' => [],
+            'Agustus' => [],
+            'September' => [],
+            'Oktober' => [],
+            'November' => [],
+            'Desember' => [],
+        ];
+
         if($month){
             $bulan = [
                 'Januari' => 1,
@@ -116,13 +198,6 @@ class BaseController extends Controller
             $year = Carbon::now()->year;
             $startDate = Carbon::createFromFormat('Y-m-d', $year . '-' . $monthNumber . '-01');
             $endDate = $startDate->copy()->endOfMonth();
-        }
-        elseif($request->filterTahun){
-            $startDate = Carbon::parse($request->filterTahun . '-01-01');
-            $endDate = Carbon::parse($request->filterTahun . '-12-31');
-        }else{
-            $startDate = Carbon::parse($request->tanggalAwal);
-            $endDate = Carbon::parse($request->tanggalAkhir);
         }
         $allDates = [];
 

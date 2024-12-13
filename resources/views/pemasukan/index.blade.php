@@ -75,7 +75,7 @@
                     </td>
                     <td class="px-6 py-4">
                         {{ $data->keterangan }}
-                    </td>dif
+                    </td>
                     </td>
                     <td class="px-6 py-4 flex items-center gap-2">
                         <button data-modal-target="edit-modal{{$data->id}}" data-modal-toggle="edit-modal{{$data->id}}" class="text-black text-xs font-semibold w-fit rounded-md py-1 px-2 bg-[#CED5FC]">Ubah</button>
