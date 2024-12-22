@@ -51,14 +51,14 @@
                         {{ $data->tanggalMasuk }}
                     </td>
                     <td class="px-6 py-4">
-                        {{ $data->hargaSewa }}/{{ $data->sewaKamar }}
+                        {{ 'Rp. ' . number_format($data->hargaSewa, 2, ',', '.') }}/{{ $data->sewaKamar }}
                     </td>
                     <td class="px-6 py-4">
                         {{ $data->lamaSewa }} {{ $data->sewaKamar }}
                     </td>
                     <td class="px-6 py-4">
                         @if($data->status == "Belum Lunas")
-                        <button class="py-1 px-2 text-white text-xs font-semibold bg-[#08C552] rounded-md">Belum Lunas</button>
+                        <button class="py-1 px-2 text-white text-xs font-semibold bg-[#F82929] rounded-md">Belum Lunas</button>
                         @else
                         <button class="py-1 px-2 text-white text-xs font-semibold bg-[#08C552] rounded-md">Lunas</button>
                         @endif
@@ -240,13 +240,13 @@
                                     <div class="mb-6 flex items-center">
                                         <label for="hargaSewa" class="block font-medium text-gray-900 w-1/2 text-lg">Harga Sewa</label>
                                         <div id="hargaSewa" class="w-1/2 text-gray-900 text-lg block p-2.5">
-                                            {{ $data->hargaSewa }}
+                                            {{ 'Rp. ' . number_format($data->hargaSewa, 2, ',', '.') }}
                                         </div>
                                     </div>
                                     <div class="mb-6 flex items-center">
                                         <label for="totalSewa" class="block font-medium text-gray-900 w-1/2 text-lg">Total Sewa</label>
                                         <div id="totalSewa" class="w-1/2 text-gray-900 text-lg block p-2.5">
-                                            {{ $data->totalSewa }}
+                                            {{ 'Rp. ' . number_format($data->totalSewa, 2, ',', '.') }}
                                         </div>
                                     </div>
                                     <div class="mb-6 flex items-center">

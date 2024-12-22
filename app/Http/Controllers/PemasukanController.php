@@ -38,14 +38,14 @@ class PemasukanController extends Controller
     {
         try{
             if($request->status){
-            $request->validate([
-                "kamar" => "required",
-                "penghuni" => "required",
-                "tanggalPembayaran" => "required",
-                "nominal" => "required",
-                "status" => "required",
-                "keterangan" => "required"
-            ]);
+                $request->validate([
+                    "kamar" => "required",
+                    "penghuni" => "required",
+                    "tanggalPembayaran" => "required",
+                    "nominal" => "required",
+                    "status" => "required",
+                    "keterangan" => "required"
+                ]);
                 Pemasukan::create([
                     "kamar" => $request->kamar,
                     "penghuni" => $request->penghuni,
@@ -61,7 +61,7 @@ class PemasukanController extends Controller
                 "tanggalPembayaran" => "required",
                 "nominal" => "required",
                 "keterangan" => "required"
-            ]);
+                ]);
                 Pemasukan::create([
                     "kamar" => $request->kamar,
                     "penghuni" => $request->penghuni,

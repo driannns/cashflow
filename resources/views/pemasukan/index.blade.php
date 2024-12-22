@@ -68,7 +68,7 @@
                         {{ $data->tanggalPembayaran }}
                     </td>
                     <td class="px-6 py-4">
-                        {{ $data->nominal }}
+                        {{ 'Rp. ' . number_format($data->nominal, 2, ',', '.') }}
                     </td>
                     <td class="px-6 py-4">
                         {{ $data->status }}
@@ -92,7 +92,7 @@
                             <!-- Modal header -->
                             <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t">
                                 <h3 class="text-xl font-semibold text-gray-900 text-center">
-                                    Ubah Data Penyewa
+                                    Ubah Data Pemasukan
                                 </h3>
                                 <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center" data-modal-hide="edit-modal{{$data->id}}">
                                     <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">

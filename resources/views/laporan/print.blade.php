@@ -19,7 +19,7 @@
     <body class="font-sans antialiased">
     <div class="p-20 bg-white min-h-screen">
         <div>
-            <h1 class="text-center text-2xl font-bold">Laporan Keuangan Rumahku Kost Tahun 2024</h1>
+            <h1 class="text-center text-2xl font-bold">Laporan Keuangan Rumahku Kost Periode {{ $period }}</h1>
             <div class="flex flex-col gap-5 mt-10">
                 @foreach($months as $month => $entries)
                 <div>
@@ -88,7 +88,7 @@
                 @endforeach
             </div>
             <div class="w-1/2">
-                <h1 class="text-center text-2xl font-bold">Total Hasil Tahun 2024</h1>
+                <h1 class="text-center text-2xl font-bold">Total Hasil Periode {{ $period }}</h1>
                 <div class="text-xl font-bold text-[#0EDD5F] flex items-center justify-around border py-1 px-4 my-4 rounded-md">
                     <p>Total Pemasukan</p>
                     <p>{{ 'Rp. ' . number_format($totalPemasukan, 2, ',', '.') }}</p>
