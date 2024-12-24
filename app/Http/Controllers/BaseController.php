@@ -74,7 +74,7 @@ class BaseController extends Controller
             ];
         }
 
-        return view ('dashboard', compact('pemasukanValuesVAT', 'currentYear', 'currentMonthName', 'penyewa', 'totalPemasukan', 'totalPengeluaran', 'pemasukanValues', 'pengeluaranValues', 'netBalance', 'netBalance', 'months' , 'pemasukanLastYear', 'pemasukanThisYear', 'netBalanceLastYear'));
+        return view ('dashboard', compact('pemasukanValuesVAT', 'currentYear', 'currentMonthName', 'penyewa', 'totalPemasukan', 'totalPengeluaran', 'pemasukanValues', 'pengeluaranValues', 'netBalance', 'netBalance', 'months' , 'pemasukanLastYear', 'pemasukanThisYear'));
     }
 
     public function laporan(){
