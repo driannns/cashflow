@@ -101,24 +101,41 @@ class PemasukanController extends Controller
     {
          try{
             $pemasukan = Pemasukan::find($id);
+            if($request->status){
+                $request->validate([
+                    "kamar" => "required",
+                    "penghuni" => "required",
+                    "tanggalPembayaran" => "required",
+                    "nominal" => "required",
+                    "status" => "required",
+                    "keterangan" => "required"
+                ]);
 
-            $request->validate([
-                "kamar" => "required",
-                "penghuni" => "required",
-                "tanggalPembayaran" => "required",
-                "nominal" => "required",
-                "status" => "required",
-                "keterangan" => "required"
-            ]);
+                $pemasukan->update([
+                    "kamar" => $request->kamar,
+                    "penghuni" => $request->penghuni,
+                    "tanggalPembayaran" => $request->tanggalPembayaran,
+                    "nominal" => $request->nominal,
+                    "status" => $request->status,
+                    "keterangan" => $request->keterangan
+                ]);
+            }else{
+                $request->validate([
+                    "kamar" => "required",
+                    "penghuni" => "required",
+                    "tanggalPembayaran" => "required",
+                    "nominal" => "required",
+                    "keterangan" => "required"
+                ]);
 
-            $pemasukan->update([
-                "kamar" => $request->kamar,
-                "penghuni" => $request->penghuni,
-                "tanggalPembayaran" => $request->tanggalPembayaran,
-                "nominal" => $request->nominal,
-                "status" => $request->status,
-                "keterangan" => $request->keterangan
-            ]);
+                $pemasukan->update([
+                    "kamar" => $request->kamar,
+                    "penghuni" => $request->penghuni,
+                    "tanggalPembayaran" => $request->tanggalPembayaran,
+                    "nominal" => $request->nominal,
+                    "keterangan" => $request->keterangan
+                ]);
+            }
 
             return redirect()->route('pemasukan')->with('message', 'Berhasil mengedit pemasukan baru');
         }catch(\Exception $e){
