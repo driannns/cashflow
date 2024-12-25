@@ -16,8 +16,10 @@ class BaseController extends Controller
         $currentMonth = Carbon::now()->month;
         $currentYear = Carbon::now()->year;
         $currentMonthName = Carbon::now()->translatedFormat('F');
-        $totalPemasukan = Pemasukan::whereMonth('tanggalPembayaran', $currentMonth)->whereYear('tanggalPembayaran', $currentYear)->sum('nominal');
-        $totalPengeluaran = Pengeluaran::whereMonth('tanggalPengeluaran', $currentMonth)->whereYear('tanggalPengeluaran', $currentYear)->sum('jumlah');
+        $totalPemasukanCurrentMonth = Pemasukan::whereMonth('tanggalPembayaran', $currentMonth)->whereYear('tanggalPembayaran', $currentYear)->sum('nominal');
+        $totalPemasukan = Pemasukan::whereYear('tanggalPembayaran', $currentYear)->sum('nominal');
+        $totalPengeluaranCurrentMonth = Pengeluaran::whereMonth('tanggalPengeluaran', $currentMonth)->whereYear('tanggalPengeluaran', $currentYear)->sum('jumlah');
+        $totalPengeluaran = Pengeluaran::whereYear('tanggalPengeluaran', $currentYear)->sum('jumlah');
         $currentYear = Carbon::now()->year;
 
         $months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
@@ -74,7 +76,7 @@ class BaseController extends Controller
             ];
         }
 
-        return view ('dashboard', compact('pemasukanValuesVAT', 'currentYear', 'currentMonthName', 'penyewa', 'totalPemasukan', 'totalPengeluaran', 'pemasukanValues', 'pengeluaranValues', 'netBalance', 'netBalance', 'months' , 'pemasukanLastYear', 'pemasukanThisYear'));
+        return view ('dashboard', compact('totalPengeluaranCurrentMonth', 'totalPemasukanCurrentMonth', 'pemasukanValuesVAT', 'currentYear', 'currentMonthName', 'penyewa', 'totalPemasukan', 'totalPengeluaran', 'pemasukanValues', 'pengeluaranValues', 'netBalance', 'netBalance', 'months' , 'pemasukanLastYear', 'pemasukanThisYear'));
     }
 
     public function laporan(){

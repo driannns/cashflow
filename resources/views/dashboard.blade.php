@@ -30,7 +30,7 @@
                 </div>
                 <div class="flex items-center justify-around px-2 py-5">
                     <div>
-                        <p class="text-2xl font-bold">{{ 'Rp. ' . number_format($totalPemasukan, 2, ',', '.') }}</p>
+                        <p class="text-2xl font-bold">{{ 'Rp. ' . number_format($totalPemasukanCurrentMonth, 2, ',', '.') }}</p>
                         <p class="font-semibold text-lg">{{ $currentMonthName }} {{ $currentYear }}</p>
                     </div>
                     <div>
@@ -45,7 +45,7 @@
                 </div>
                 <div class="flex items-center justify-around px-2 py-5">
                     <div>
-                        <p class="text-2xl font-bold">{{ 'Rp. ' . number_format($totalPengeluaran, 2, ',', '.') }}</p>
+                        <p class="text-2xl font-bold">{{ 'Rp. ' . number_format($totalPengeluaranCurrentMonth, 2, ',', '.') }}</p>
                         <p class="font-semibold text-lg">{{ $currentMonthName }} {{ $currentYear }}</p>
                     </div>
                     <div>
