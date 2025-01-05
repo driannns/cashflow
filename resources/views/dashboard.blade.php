@@ -34,7 +34,7 @@
                         <p class="font-semibold text-lg">{{ $currentMonthName }} {{ $currentYear }}</p>
                     </div>
                     <div>
-                        >
+                        
                     </div>
                 </div>
             </a>

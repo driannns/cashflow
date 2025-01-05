@@ -43,28 +43,7 @@
         </div>
         <div class="grid grid-cols-2 gap-10 mx-auto w-10/12">
             <div class="border-2 rounded-lg p-4 bg-white">
-                <h1 class="text-center text-xl font-bold">Laporan Bulan {{ $lastTwoMonthsName }} {{ $currentYear }}</h1>
-                <hr>
-                <div class="flex items-center justify-between my-3 text-[#0EDD5F]">
-                    <p class="">Pemasukan</p>
-                    <p>{{ 'Rp. ' . number_format($pemasukanLastTwoMonths, 2, ',', '.') }}</p>
-                </div>
-                <hr>
-                <div class="flex items-center justify-between my-3 text-[#F24E1E]">
-                    <p>Pengeluaran</p>
-                    <p>{{ 'Rp. ' . number_format($pengeluaranLastTwoMonths, 2, ',', '.') }}</p>
-                </div>
-                <hr>
-                <div class="flex items-center justify-between my-3 text-[#1068EB]">
-                    <p>Total</p>
-                    <p>{{ 'Rp. ' . number_format($pemasukanLastTwoMonths-$pengeluaranLastTwoMonths, 2, ',', '.') }}</p>
-                </div>
-                <a href="{{ route('printFiltered', $lastTwoMonthsName) }}" class="flex justify-center">
-                        <button class="flex items-center gap-2 py-2 px-4 rounded-md bg-[#CED5FC] text-bold">Cetak <img src="{{ asset('assets/cetak.png') }}" alt="Cetak"></button>
-                </a>
-            </div>
-            <div class="border-2 rounded-lg p-4 bg-white">
-                <h1 class="text-center text-xl font-bold">Laporan Bulan {{ $lastThreeMonthsName }} {{ $currentYear }}</h1>
+                <h1 class="text-center text-xl font-bold">Laporan Bulan {{ $lastThreeMonthsName }} {{ $lastMonthYear }}</h1>
                 <hr>
                 <div class="flex items-center justify-between my-3 text-[#0EDD5F]">
                     <p class="">Pemasukan</p>
@@ -80,12 +59,33 @@
                     <p>Total</p>
                     <p>{{ 'Rp. ' . number_format($pemasukanLastThreeMonth-$pengeluaranLastThreeMonth, 2, ',', '.') }}</p>
                 </div>
+                <a href="{{ route('printFiltered', $lastTwoMonthsName) }}" class="flex justify-center">
+                        <button class="flex items-center gap-2 py-2 px-4 rounded-md bg-[#CED5FC] text-bold">Cetak <img src="{{ asset('assets/cetak.png') }}" alt="Cetak"></button>
+                </a>
+            </div>
+            <div class="border-2 rounded-lg p-4 bg-white">
+                <h1 class="text-center text-xl font-bold">Laporan Bulan {{ $lastTwoMonthsName }} {{ $lastMonthYear }}</h1>
+                <hr>
+                <div class="flex items-center justify-between my-3 text-[#0EDD5F]">
+                    <p class="">Pemasukan</p>
+                    <p>{{ 'Rp. ' . number_format($pemasukanLastTwoMonths, 2, ',', '.') }}</p>
+                </div>
+                <hr>
+                <div class="flex items-center justify-between my-3 text-[#F24E1E]">
+                    <p>Pengeluaran</p>
+                    <p>{{ 'Rp. ' . number_format($pengeluaranLastTwoMonths, 2, ',', '.') }}</p>
+                </div>
+                <hr>
+                <div class="flex items-center justify-between my-3 text-[#1068EB]">
+                    <p>Total</p>
+                    <p>{{ 'Rp. ' . number_format($pemasukanLastTwoMonths-$pengeluaranLastTwoMonths, 2, ',', '.') }}</p>
+                </div>
                 <a href="{{ route('printFiltered', $lastThreeMonthsName) }}" class="flex justify-center">
                         <button class="flex items-center gap-2 py-2 px-4 rounded-md bg-[#CED5FC] text-bold">Cetak <img src="{{ asset('assets/cetak.png') }}" alt="Cetak"></button>
                 </a>
             </div>
             <div class="border-2 rounded-lg p-4 bg-white">
-                <h1 class="text-center text-xl font-bold">Laporan Bulan {{ $lastMonthName }} {{ $currentYear }}</h1>
+                <h1 class="text-center text-xl font-bold">Laporan Bulan {{ $lastMonthName }} {{ $lastMonthYear }}</h1>
                 <hr>
                 <div class="flex items-center justify-between my-3 text-[#0EDD5F]">
                     <p class="">Pemasukan</p>

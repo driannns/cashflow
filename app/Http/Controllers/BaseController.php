@@ -83,9 +83,16 @@ class BaseController extends Controller
         Carbon::setLocale('id');
 
         $currentYear= Carbon::now()->year;
-        $lastThreeMonth = Carbon::now()->subMonth(3)->month;
-        $lastTwoMonths = Carbon::now()->subMonth(2)->month;
-        $lastMonth = Carbon::now()->subMonth()->month;
+        $currentDate = Carbon::now();
+        $lastMonthDate = $currentDate->copy()->subMonth();
+        $lastMonth = $lastMonthDate->month;
+        $lastMonthYear = $lastMonthDate->year;
+        $lastTwoMonthsDate = $currentDate->copy()->subMonth(2);
+        $lastTwoMonths = $lastTwoMonthsDate->month;
+        $lastTwoMonthYear = $lastTwoMonthsDate->year;
+        $lastThreeMonthDate = $currentDate->copy()->subMonth(3);
+        $lastThreeMonth = $lastThreeMonthDate->month;
+        $lastThreeMonthYear = $lastThreeMonthDate->year;
         $currentMonth= Carbon::now()->month;
 
         $currentMonthName = Carbon::now()->translatedFormat('F');
@@ -96,19 +103,19 @@ class BaseController extends Controller
         $pemasukanCurrentMonth = Pemasukan::whereMonth('tanggalPembayaran', $currentMonth)->whereYear('tanggalPembayaran', $currentYear)->sum('nominal');
         $pengeluaranCurrentMonth = Pengeluaran::whereMonth('tanggalPengeluaran', $currentMonth)->whereYear('tanggalPengeluaran', $currentYear)->sum('jumlah');
         
-        $pemasukanLastMonth = Pemasukan::whereMonth('tanggalPembayaran', $lastMonth)->whereYear('tanggalPembayaran', $currentYear)->sum('nominal');
-        $pengeluaranLastMonth = Pengeluaran::whereMonth('tanggalPengeluaran', $lastMonth)->whereYear('tanggalPengeluaran', $currentYear)->sum('jumlah');
+        $pemasukanLastMonth = Pemasukan::whereMonth('tanggalPembayaran', $lastMonth)->whereYear('tanggalPembayaran', $lastMonthYear)->sum('nominal');
+        $pengeluaranLastMonth = Pengeluaran::whereMonth('tanggalPengeluaran', $lastMonth)->whereYear('tanggalPengeluaran', $lastMonthYear)->sum('jumlah');
 
-        $pemasukanLastTwoMonths = Pemasukan::whereMonth('tanggalPembayaran', $lastTwoMonths)->whereYear('tanggalPembayaran', $currentYear)->sum('nominal');
-        $pengeluaranLastTwoMonths = Pengeluaran::whereMonth('tanggalPengeluaran', $lastTwoMonths)->whereYear('tanggalPengeluaran', $currentYear)->sum('jumlah');
+        $pemasukanLastTwoMonths = Pemasukan::whereMonth('tanggalPembayaran', $lastTwoMonths)->whereYear('tanggalPembayaran', $lastTwoMonthYear)->sum('nominal');
+        $pengeluaranLastTwoMonths = Pengeluaran::whereMonth('tanggalPengeluaran', $lastTwoMonths)->whereYear('tanggalPengeluaran', $lastTwoMonthYear)->sum('jumlah');
 
-        $pemasukanLastThreeMonth = Pemasukan::whereMonth('tanggalPembayaran', $lastThreeMonth)->whereYear('tanggalPembayaran', $currentYear)->sum('nominal');
-        $pengeluaranLastThreeMonth = Pengeluaran::whereMonth('tanggalPengeluaran', $lastThreeMonth)->whereYear('tanggalPengeluaran', $currentYear)->sum('jumlah');
+        $pemasukanLastThreeMonth = Pemasukan::whereMonth('tanggalPembayaran', $lastThreeMonth)->whereYear('tanggalPembayaran', $lastThreeMonthYear)->sum('nominal');
+        $pengeluaranLastThreeMonth = Pengeluaran::whereMonth('tanggalPengeluaran', $lastThreeMonth)->whereYear('tanggalPengeluaran', $lastThreeMonthYear)->sum('jumlah');
 
         $currentYear = date('Y');
         $years = range($currentYear, $currentYear - 10);
         
-        return view('laporan.index', compact('years', 'currentYear', 'currentMonthName', 'lastMonthName', 'lastTwoMonthsName', 'lastThreeMonthsName','pemasukanCurrentMonth', 'pengeluaranCurrentMonth', 'pemasukanLastMonth', 'pengeluaranLastMonth', 'pemasukanLastTwoMonths', 'pengeluaranLastTwoMonths', 'pemasukanLastThreeMonth', 'pengeluaranLastThreeMonth'));
+        return view('laporan.index', compact('years', 'lastMonthYear', 'currentYear', 'currentMonthName', 'lastMonthName', 'lastTwoMonthsName', 'lastThreeMonthsName','pemasukanCurrentMonth', 'pengeluaranCurrentMonth', 'pemasukanLastMonth', 'pengeluaranLastMonth', 'pemasukanLastTwoMonths', 'pengeluaranLastTwoMonths', 'pemasukanLastThreeMonth', 'pengeluaranLastThreeMonth'));
     }
 
     public function print(Request $request){
