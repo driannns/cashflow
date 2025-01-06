@@ -59,7 +59,7 @@
                     <p>Total</p>
                     <p>{{ 'Rp. ' . number_format($pemasukanLastThreeMonth-$pengeluaranLastThreeMonth, 2, ',', '.') }}</p>
                 </div>
-                <a href="{{ route('printFiltered', $lastTwoMonthsName) }}" class="flex justify-center">
+                <a href="{{ route('printFiltered', ['month' => $lastThreeMonthsName, 'year' => $lastMonthYear]) }}" class="flex justify-center">
                         <button class="flex items-center gap-2 py-2 px-4 rounded-md bg-[#CED5FC] text-bold">Cetak <img src="{{ asset('assets/cetak.png') }}" alt="Cetak"></button>
                 </a>
             </div>
@@ -80,7 +80,7 @@
                     <p>Total</p>
                     <p>{{ 'Rp. ' . number_format($pemasukanLastTwoMonths-$pengeluaranLastTwoMonths, 2, ',', '.') }}</p>
                 </div>
-                <a href="{{ route('printFiltered', $lastThreeMonthsName) }}" class="flex justify-center">
+                <a href="{{ route('printFiltered', ['month' => $lastTwoMonthsName, 'year' => $lastMonthYear]) }}" class="flex justify-center">
                         <button class="flex items-center gap-2 py-2 px-4 rounded-md bg-[#CED5FC] text-bold">Cetak <img src="{{ asset('assets/cetak.png') }}" alt="Cetak"></button>
                 </a>
             </div>
@@ -101,7 +101,7 @@
                     <p>Total</p>
                     <p>{{ 'Rp. ' . number_format($pemasukanLastMonth-$pengeluaranLastMonth, 2, ',', '.') }}</p>
                 </div>
-                <a href="{{ route('printFiltered', $lastMonthName) }}" class="flex justify-center">
+                <a href="{{ route('printFiltered', ['month' => $lastMonthName, 'year' => $lastMonthYear]) }}" class="flex justify-center">
                         <button class="flex items-center gap-2 py-2 px-4 rounded-md bg-[#CED5FC] text-bold">Cetak <img src="{{ asset('assets/cetak.png') }}" alt="Cetak"></button>
                 </a>
             </div>
@@ -122,7 +122,7 @@
                     <p>Total</p>
                     <p>{{ 'Rp. ' . number_format($pemasukanCurrentMonth-$pengeluaranCurrentMonth, 2, ',', '.') }}</p>
                 </div>
-                <a href="{{ route('printFiltered', $currentMonthName) }}" class="flex justify-center">
+                <a href="{{ route('printFiltered', ['month' => $currentMonthName, 'year' => $currentYear]) }}" class="flex justify-center">
                         <button class="flex items-center gap-2 py-2 px-4 rounded-md bg-[#CED5FC] text-bold">Cetak <img src="{{ asset('assets/cetak.png') }}" alt="Cetak"></button>
                 </a>
             </div>

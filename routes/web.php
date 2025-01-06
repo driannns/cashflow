@@ -42,7 +42,7 @@ Route::middleware('auth')->group(function () {
     
     Route::get('/laporan', [BaseController::class, 'laporan'])->name('laporan');
     Route::post('/laporant/printed', [BaseController::class, 'print'])->name('print');
-    Route::get('/laporant/printed/{month}', [BaseController::class, 'printFiltered'])->name('printFiltered');
+    Route::get('/laporant/printed/{month}/{year}', [BaseController::class, 'printFiltered'])->name('printFiltered');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

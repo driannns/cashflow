@@ -196,8 +196,9 @@ class BaseController extends Controller
         
         return view('laporan.print', compact('period', 'months', 'tanggalAwal', 'tanggalAkhir', 'monthSums', 'totalPemasukan', 'totalPengeluaran'));
     }
-    public function printFiltered(Request $request, String $month){
+    public function printFiltered(Request $request, String $month, String $years){
         Carbon::setLocale('id');
+        
         $period = "Bulan $month";
         $year = Carbon::now()->year;
         $months = [
@@ -214,8 +215,9 @@ class BaseController extends Controller
             'November' => [],
             'Desember' => [],
         ];
-
+        
         if($month){
+            // dd($month, $years);
             $bulan = [
                 'Januari' => 1,
                 'Februari' => 2,
@@ -232,11 +234,10 @@ class BaseController extends Controller
             ];
             $monthNumber = isset($bulan[$month]) ? $bulan[$month] : null;
             Carbon::setLocale('en');
-            $startDate = Carbon::createFromFormat('Y-m-d', $year . '-' . $monthNumber . '-01');
+            $startDate = Carbon::createFromFormat('Y-m-d', $years . '-' . $monthNumber . '-01');
             $endDate = $startDate->copy()->endOfMonth();
         }
         $allDates = [];
-
         for ($date = $startDate; $date->lte($endDate); $date->addDay()) {
             $allDates[] = $date->toDateString();
         }
@@ -245,13 +246,13 @@ class BaseController extends Controller
             $carbonDate = Carbon::parse($date);
             $monthName = $carbonDate->translatedFormat('F');
 
-            $pemasukan = Pemasukan::whereDate('tanggalPembayaran', $date)->whereYear('tanggalPembayaran', $year)->get();
+            $pemasukan = Pemasukan::whereDate('tanggalPembayaran', $date)->whereYear('tanggalPembayaran', $years)->get();
             foreach ($pemasukan as $entry) {
                 $entry->type = 'Pemasukan';
                 $months[$monthName][] = $entry;
             }
 
-            $pengeluaran = Pengeluaran::whereDate('tanggalPengeluaran', $date)->whereYear('tanggalPengeluaran', $year)->get();
+            $pengeluaran = Pengeluaran::whereDate('tanggalPengeluaran', $date)->whereYear('tanggalPengeluaran', $years)->get();
             foreach ($pengeluaran as $entry) {
                 $entry->type = 'Pengeluaran';
                 $months[$monthName][] = $entry;
